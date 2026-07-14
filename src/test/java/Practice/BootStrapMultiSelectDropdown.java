@@ -10,36 +10,36 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class BootStrapDropdownDemo {
+public class BootStrapMultiSelectDropdown {
 
 	public static void main(String[] args) throws InterruptedException {
 		
-		// BootStrap downdown single selection
 		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		
 		driver.get("https://www.jqueryscript.net/demo/Drop-Down-Combo-Tree/");
 		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
 		
-		// Click on arrow button to expand pane for dropdown option selection
-		driver.findElement(By.xpath("(//button[@class='comboTreeArrowBtn'])[3]")).click();
-		List<WebElement> options = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("(//div[@class='comboTreeDropDownContainer'])[3]//li//span[@data-id]")));
-		System.out.println(options.size());
+		driver.findElement(By.xpath("(//button[@class='comboTreeArrowBtn'])[1]")).click();
 		
-		// Print the list of options available and select given option
+		List<WebElement> options = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("(//div[@class='comboTreeDropDownContainer'])[1]//li//span[@data-id]")));
+		System.out.println("Count of options : "+options.size());
+		
 		for(WebElement option : options)
 		{
 			String optionText = option.getText();
-			System.out.println(optionText);
-			if(optionText.equals("choice 2 2"))
-			{
-				option.click();
-			}
+			System.out.println("option : " + optionText);
+		}
+		
+		// Select multiple options
+		String[] optionsToBeSelected = {"choice 2","choice 6 2 1"};
+		
+		for(String optionToBeSelected : optionsToBeSelected)
+		{
+			driver.findElement(By.xpath("(//div[@class='comboTreeDropDownContainer'])[1]//li//span[contains(text(),'"+optionToBeSelected+"')]")).click();
 		}
 		
 		driver.quit();
-		
-
 	}
 
 }
