@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -48,7 +49,10 @@ public class ExcelUtility {
 		fi = new FileInputStream(xlFile);
 		wb = new XSSFWorkbook(fi);
 		sh = wb.getSheet(sheet);
-		String cellValue = sh.getRow(rowNumber).getCell(cellNumber).toString();
+		row = sh.getRow(rowNumber);
+		cell = row.getCell(cellNumber);
+		DataFormatter formatter = new DataFormatter();
+		String cellValue = formatter.formatCellValue(cell);
 		wb.close();
 		fi.close();
 		return cellValue;
